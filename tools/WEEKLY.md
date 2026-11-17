@@ -21,6 +21,14 @@ Temas visuais (nomes exatos usados no código): `"1. Ruídos do Agora"` (ondas d
 `"2. Cidade em Verso"` (cidade ao entardecer: cotidiano, sociedade, cultura), `"3. O que a gente não diz"` (lua e névoa: emoções, silêncio, meio ambiente),
 `"4. Fecha o Ano em Verso"` (nascer do sol: esperança, gratidão, balanço).
 
+## Voz editorial da página (definida pelo dono)
+A página não é de esquerda nem de direita. Os versos defendem, sem apontar partido, governo ou pessoa:
+- **Senso crítico:** pensar por conta própria vale mais do que torcer. É um erro defender político ou ideia a qualquer custo, sem questionar. Escrever sobre dúvida, escuta, perguntar "e se eu estiver errado?", sem dizer em quem votar nem quem está certo.
+- **Agir certo sem plateia:** valorizar quem faz a coisa correta fora do padrão, sem buscar aprovação nem aplauso (gestos anônimos, escolhas difíceis, coragem silenciosa).
+- **Mundo real acima do mundo dos famosos:** convidar a olhar para o que está perto (vizinho, família, rua, o próprio dia) em vez de viver a vida alheia das celebridades. Falar do fenômeno, nunca citar celebridade ou marca.
+- A crítica é sempre a um **comportamento humano comum** (fanatismo, vaidade, distração), nunca a um grupo, partido, religião ou pessoa. Tom de convite à reflexão, sem sermão e sem superioridade moral.
+- Ao escolher assuntos da semana, prefira os que permitam esse olhar.
+
 ## Ética e cuidados (inegociáveis, valem para TODO post)
 **Respeito e não discriminação**
 - Nenhum conteúdo preconceituoso: nada que discrimine, estereotipe, ridicularize ou diminua pessoas por raça, cor, etnia, origem, região (ex.: nordestinos, nortistas), gênero, orientação sexual, identidade de gênero, religião, idade, deficiência, aparência, classe social ou profissão.
