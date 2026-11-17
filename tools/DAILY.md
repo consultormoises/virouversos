@@ -43,3 +43,8 @@ Todo post novo usa os mascotes (`tools/mascot.py`, `tools/stamp.py`; exemplo em 
 
 ## Gancho da capa (obrigatório)
 Capa e primeira linha da legenda começam com PERGUNTA ou CURIOSIDADE que faça deslizar: "Você sabia que...?", "Qual é...?", "O que você ainda...?", um fato real surpreendente do assunto da semana. Evitar título só descritivo/poético ("Seu valor não oscila", "Balanço"). Ética: sem sensacionalismo, sem explorar tragédia, sem falsa urgência; o fato citado precisa ser verdadeiro e ter fonte. Script de referência: `tools/rehook.py` (arquivos h_slide_NN / h_post).
+
+## Escolha do assunto (o que mais conecta à vida das pessoas)
+Prioridade: custo de vida no mercado/feira e contas do mês, trabalho e rotina, trânsito, calor/chuva do dia, escola/provas, saúde e sono, família e relacionamentos, redes sociais, TV/novela/reality/música/esporte e o "mundo dos famosos" como porta de entrada.
+Evitar: cotação de dólar, jargão econômico, política institucional, assuntos distantes do cotidiano.
+Fofoca/celebridade: só como FENÔMENO, sem nomes ("o término que parou a internet", "o reality da semana", "a treta do momento"); depois virar para o mundo real ("e o seu relacionamento? quem está do seu lado de verdade?"). Nunca repetir boato, acusação ou vida privada; só o que fonte confiável noticiou; nunca citar pessoas reais, marcas ou políticos pelo nome.
