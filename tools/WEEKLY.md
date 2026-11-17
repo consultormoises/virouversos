@@ -21,6 +21,36 @@ Temas visuais (nomes exatos usados no código): `"1. Ruídos do Agora"` (ondas d
 `"2. Cidade em Verso"` (cidade ao entardecer: cotidiano, sociedade, cultura), `"3. O que a gente não diz"` (lua e névoa: emoções, silêncio, meio ambiente),
 `"4. Fecha o Ano em Verso"` (nascer do sol: esperança, gratidão, balanço).
 
+## Ética e cuidados (inegociáveis, valem para TODO post)
+**Respeito e não discriminação**
+- Nenhum conteúdo preconceituoso: nada que discrimine, estereotipe, ridicularize ou diminua pessoas por raça, cor, etnia, origem, região (ex.: nordestinos, nortistas), gênero, orientação sexual, identidade de gênero, religião, idade, deficiência, aparência, classe social ou profissão.
+- Sem piadas, ironias ou metáforas que usem grupos como alvo. Linguagem inclusiva e digna; evitar termos pejorativos, capacitistas ou que naturalizem violência.
+- Falar **sobre** temas e comunidades com respeito, nunca "em nome" de um grupo nem apropriando a voz de quem viveu a experiência. Em datas como Consciência Negra, Dia do Orgulho, Dia da Mulher e similares: tom de reconhecimento e escuta, sem folclorizar, sem clichês e sem transformar dor em estética.
+- Pobreza, seca, doença, luto e violência: tratar pessoas com dignidade, como sujeitos, nunca como cenário nem como "inspiração" para os outros.
+
+**Verdade e transparência**
+- Só afirmar fatos que constem em fonte lida, com data desta semana. Não inventar números, falas, nomes ou causas. Se a fonte for incerta ou houver versões conflitantes, escolher outro assunto.
+- Versos **originais**: nunca copiar ou parafrasear de perto poemas, letras ou textos existentes, e não imitar o estilo reconhecível de um autor vivo.
+- Não sugerir que a página tem opinião oficial de governo, empresa ou instituição. Não usar nomes de marcas, empresas ou celebridades.
+
+**Política e assuntos sensíveis**
+- Neutralidade partidária total: sem apoio ou ataque a candidatos, partidos, governos ou movimentos; sem fazer eleição, impeachment ou polarização de matéria-prima. Se o assunto é político, escolher o ângulo humano e comum a todos (ex.: esperar, cuidar, a conta do mês) ou escolher outro assunto.
+- Evitar saúde com orientação (diagnóstico, tratamento, vacina), religião como disputa, e tragédias recentes com mortos como matéria-prima.
+- **Saúde mental:** não romantizar tristeza, automutilação ou suicídio, nem usar o tema como efeito poético. Se um poema tocar em sofrimento emocional, acrescentar à legenda uma linha de acolhimento ("Se estiver difícil, procure alguém de confiança. No Brasil, o CVV atende 24 horas pelo 188.") e evitar imagens de desesperança sem saída.
+- Crianças e adolescentes: nada que os exponha, sexualize ou cite individualmente.
+
+**Privacidade e imagem**
+- Não citar nem retratar pessoas reais identificáveis (nome, rosto, voz). Nas artes só ilustrações próprias; não usar fotos de terceiros.
+- Não expor dados pessoais de seguidores. Se responder a comentários algum dia, nunca expor o autor.
+
+**Acessibilidade e boa-fé com o público**
+- Sempre preencher `mediaAltText` descrevendo a arte e transcrevendo o poema.
+- Evitar clickbait, manipulação emocional, falsas urgências e "marque 3 amigos ou terá azar". Chamadas para ação só convidam a refletir, salvar ou compartilhar.
+- Se houver erro, corrigir o post (atualizar legenda ou trocar a mídia no Metricool) e registrar no resumo.
+
+**Antes de agendar, faça esta checagem final** (e registre "checagem ética feita" no resumo):
+1. Algum verso ofende, estereotipa ou ironiza algum grupo? 2. Todo fato está na fonte, com data da semana? 3. Há pessoa real, marca ou partido citado? 4. O assunto explora uma dor recente? 5. Há alt text? Se qualquer resposta indicar risco, reescreva ou troque o assunto.
+
 ## Passo a passo
 1. **Estado.** Leia `tools/state.json`. Datas em `topical_done` já têm post baseado em assunto em alta: **não sobrescreva** esses posts.
    Liste os posts agendados da semana com `getScheduledPosts` (segunda 00:00 a domingo 23:59, fuso `America/Sao_Paulo`). Guarde `id` e `uuid` de cada um (o `id` muda após cada atualização).
