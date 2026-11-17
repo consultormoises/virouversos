@@ -40,3 +40,6 @@ Todo post novo usa os mascotes (`tools/mascot.py`, `tools/stamp.py`; exemplo em 
 - Posição: Verso embaixo à direita (700,850,440), Lume em cima à esquerda (-70,-70,400); conferir que não cobrem texto nem "@virouversos".
 - Ética: tema pesado (tragédia, luto, violência) = nada de personagem alegre; usar `sad` discreto ou nenhum personagem.
 - Alt text: descrever a expressão do personagem em cada slide.
+
+## Gancho da capa (obrigatório)
+Capa e primeira linha da legenda começam com PERGUNTA ou CURIOSIDADE que faça deslizar: "Você sabia que...?", "Qual é...?", "O que você ainda...?", um fato real surpreendente do assunto da semana. Evitar título só descritivo/poético ("Seu valor não oscila", "Balanço"). Ética: sem sensacionalismo, sem explorar tragédia, sem falsa urgência; o fato citado precisa ser verdadeiro e ter fonte. Script de referência: `tools/rehook.py` (arquivos h_slide_NN / h_post).
