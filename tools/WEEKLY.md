@@ -29,6 +29,17 @@ A página não é de esquerda nem de direita. Os versos defendem, sem apontar pa
 - A crítica é sempre a um **comportamento humano comum** (fanatismo, vaidade, distração), nunca a um grupo, partido, religião ou pessoa. Tom de convite à reflexão, sem sermão e sem superioridade moral.
 - Ao escolher assuntos da semana, prefira os que permitam esse olhar.
 
+## Playbook de crescimento (viralização com ética)
+Base: dados do Metricool 2026 (metricool.com/pt/algoritmo-instagram e /tendencias-instagram).
+- **Sinais que mais pesam:** salvamentos, compartilhamentos (envio por DM), tempo de visualização e comentários longos. Carrossel recebe cerca de 9x mais salvamentos; Reel tem o maior tempo de visualização. Imagem única é o formato mais fraco: prefira carrossel e Reel.
+- **CTA que funciona:** pedir comentário (+203%), pedir salvamento (+92%), fazer uma pergunta pessoal na legenda (+37% de comentários). **Nunca pedir curtida** (reduz). Fórmula: pergunta pessoal + "Salve para reler e envie para [alguém específico]".
+- **Hashtags:** no máximo 4 (posts com muitas hashtags tiveram cerca de 31% menos visualizações). O Instagram indexa palavras da legenda e posts públicos aparecem no Google: ponha a palavra-chave do assunto na primeira linha (ex.: "Poema sobre o Enem", "Abayomi", "COP31").
+- **Gancho:** capa do carrossel e primeiros 2 segundos do Reel com a frase mais forte do poema. Último slide/verso deve dar vontade de enviar a alguém.
+- **72 horas:** cerca de 70% das visualizações vêm nos 3 primeiros dias. Postar às 19h (maior engajamento médio), 10h aos domingos.
+- **Séries assinatura (reconhecimento):** segunda = "Verso da Semana" (carrossel); quarta = "O Avesso da Trend" (imagem ou carrossel curto: pega o que está mais buscado e mostra o lado humano, sem citar nomes e sem tomar lado); sexta = Reel curto com gancho; domingo = "Carta de Domingo" (carrossel sentimental para salvar).
+- **Inspiração de assuntos:** além das manchetes, olhe Google Trends BR (trends.google.com/trending?geo=BR) e datas da semana. Itens de política, celebridades e esporte entram só pelo ângulo humano e comum (ex.: o preço das coisas que não têm preço, o aplauso que ninguém vê), conforme a voz editorial e a ética. Em dezembro: campanha "Retrospectiva em Verso" (2026 em versos, Carta ao eu de janeiro).
+- Viral nunca justifica quebrar a ética: nada de clickbait, falsa urgência, polêmica vazia ou exploração de dor.
+
 ## Ética e cuidados (inegociáveis, valem para TODO post)
 **Respeito e não discriminação**
 - Nenhum conteúdo preconceituoso: nada que discrimine, estereotipe, ridicularize ou diminua pessoas por raça, cor, etnia, origem, região (ex.: nordestinos, nortistas), gênero, orientação sexual, identidade de gênero, religião, idade, deficiência, aparência, classe social ou profissão.
@@ -71,8 +82,8 @@ A página não é de esquerda nem de direita. Os versos defendem, sem apontar pa
    - Só afirmar fatos que estejam na fonte lida. Se houver número ou data, confira.
    - Se uma data comemorativa cair na semana (ex.: 20/11 Consciência Negra), priorize com respeito.
 4. **Escrever os versos.** Português do Brasil, tom reflexivo, humano e acolhedor, sem moralismo, sem panfleto. Verso livre, 6 a 9 linhas (imagem única), 5 a 8 slides curtos (carrossel), 3 a 4 estrofes de 2 a 3 versos (Reel). Originais, nunca copiados de poemas existentes.
-5. **Legenda.** Primeira linha: gancho com o assunto + 1 emoji. Depois 2 parágrafos curtos (contexto honesto do assunto + convite à reflexão), uma pergunta para comentários e chamada para salvar/compartilhar.
-   Hashtags no fim: 3 do assunto + `#poesiadoagora #poesia #poetasdoinstagram #viroversos`.
+5. **Legenda** (siga o "Playbook de crescimento" abaixo). Primeira linha: palavra-chave do assunto + gancho + 1 emoji. Depois 1 a 2 parágrafos curtos (contexto honesto + convite à reflexão), uma pergunta pessoal para comentários e a chamada "Salve e envie para...".
+   Hashtags no fim: no máximo 4, sendo 1 ou 2 do assunto + `#poesiadoagora #viroversos`.
 6. **Artes e vídeo** (rodar a partir da pasta `tools`):
 ```python
 import sys; sys.path.insert(0, "tools")
