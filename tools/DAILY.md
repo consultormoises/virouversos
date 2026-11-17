@@ -29,3 +29,14 @@ Commit/push (artes + state.json). Resumo curto: assunto, fonte (link), título/c
 ## Horários (dados do Metricool para este perfil, Instagram)
 Segunda 18:00 | Terça 17:00 | Quarta 18:00 | Quinta 20:00 | Sexta 17:00 (Reel) | Sábado 18:00 | Domingo 20:00.
 A cada ~2 meses, reconsulte `getBestTimeToPostByNetwork` (instagram, blogId 7921319) e ajuste esta tabela.
+
+## Personagens (Lume e Verso) e expressões
+
+Todo post novo usa os mascotes (`tools/mascot.py`, `tools/stamp.py`; exemplo em `tools/apply_characters.py`). A expressão acompanha o conteúdo de cada slide:
+- capa e conquistas/boas notícias: `happy`
+- pergunta, curiosidade, dúvida no texto: `doubt`
+- perda, saudade, preocupação leve (ex.: clima, "estou bem" que esconde): `sad`
+- slide final (CTA) e ação/vitória: `celebrate` (Lume + Verso, usando `cta_final.png` como base)
+- Posição: Verso embaixo à direita (700,850,440), Lume em cima à esquerda (-70,-70,400); conferir que não cobrem texto nem "@virouversos".
+- Ética: tema pesado (tragédia, luto, violência) = nada de personagem alegre; usar `sad` discreto ou nenhum personagem.
+- Alt text: descrever a expressão do personagem em cada slide.
