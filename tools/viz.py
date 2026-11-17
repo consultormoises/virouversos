@@ -416,6 +416,17 @@ def icon_heart(d, cx, cy, s, color):
     d.line(pts + [pts[0]], fill=color + (255,), width=4)
 
 
+def icon_comment(d, cx, cy, s, color):
+    w, h = s * 1.15, s * 0.85
+    x0, y0, x1, y1 = cx - w / 2, cy - h / 2 - s * 0.08, cx + w / 2, cy + h / 2 - s * 0.08
+    d.rounded_rectangle([x0, y0, x1, y1], radius=s * 0.22, fill=color + (40,), outline=color + (255,), width=4)
+    tail = [(cx - s * 0.28, y1 - 1), (cx - s * 0.42, y1 + s * 0.3), (cx - s * 0.02, y1 - 1)]
+    d.polygon(tail, fill=color + (40,))
+    d.line([tail[0], tail[1], tail[2]], fill=color + (255,), width=4)
+    for k in (-1, 0, 1):
+        d.ellipse([cx + k * s * 0.26 - 4, cy - s * 0.08 - 4, cx + k * s * 0.26 + 4, cy - s * 0.08 + 4], fill=color + (255,))
+
+
 def icon_bookmark(d, cx, cy, s, color):
     w, h = s * 0.8, s * 1.1
     pts = [(cx - w / 2, cy - h / 2), (cx + w / 2, cy - h / 2), (cx + w / 2, cy + h / 2), (cx, cy + h / 2 - s * 0.32), (cx - w / 2, cy + h / 2)]
