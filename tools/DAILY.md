@@ -27,5 +27,5 @@ Fofo, caloroso, simples, no português do dia a dia. Frases curtas. Encoraje sem
 Commit/push (artes + state.json). Resumo curto: assunto, fonte (link), título/capa, horário, link do planner, "checagem ética feita".
 
 ## Horários (dados do Metricool para este perfil, Instagram)
-Segunda 18:00 | Terça 17:00 | Quarta 18:00 | Quinta 12:00 | Sexta 17:00 (Reel) | Sábado 18:00 | Domingo 20:00.
+Segunda 18:00 | Terça 17:00 | Quarta 18:00 | Quinta 20:00 | Sexta 17:00 (Reel) | Sábado 18:00 | Domingo 20:00.
 A cada ~2 meses, reconsulte `getBestTimeToPostByNetwork` (instagram, blogId 7921319) e ajuste esta tabela.
