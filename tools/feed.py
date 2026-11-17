@@ -95,11 +95,10 @@ def cta_block(img, th, x_off, W_=W):
     d.text((W_ // 2, 90), "Gostou?", font=font(LORA, 104, "Bold"), fill=th["fg"] + (255,), anchor="mm")
     draw_ornament(d, W_ // 2, 190, 140, th["accent"])
     cx = W_ // 2
-    icon_heart(d, cx - 220, 330, 78, th["accent"])
-    icon_bookmark(d, cx, 330, 80, th["accent"])
-    icon_send(d, cx + 220, 330, 80, th["accent"])
-    for i, t in enumerate(["Curta", "Salve", "Envie"]):
-        d.text((cx - 220 + 220 * i, 420), t, font=font(INTER_M, 28), fill=th["fg"] + (225,), anchor="mm")
+    icon_bookmark(d, cx - 150, 330, 84, th["accent"])
+    icon_send(d, cx + 150, 330, 84, th["accent"])
+    for xx, tt in [(cx - 150, "Salve"), (cx + 150, "Envie")]:
+        d.text((xx, 420), tt, font=font(INTER_M, 30), fill=th["fg"] + (225,), anchor="mm")
     d.text((cx, 560), "Siga para mais versos", font=font(LORA_I, 50, "Medium Italic"), fill=th["fg"] + (235,), anchor="mm")
     d.text((cx, 650), "@virouversos", font=font(INTER, 56), fill=th["fg"] + (255,), anchor="mm")
     # sombra
