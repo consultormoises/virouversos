@@ -1,4 +1,10 @@
 {
-  "topical_done": ["2026-11-18", "2026-11-20", "2026-11-22", "2026-11-25"],
-  "observacao": "Datas com post baseado em assunto em alta. A rotina semanal não sobrescreve estas datas."
+  "topical_done": [
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-20",
+    "2026-11-22",
+    "2026-11-25"
+  ],
+  "observacao": "Datas com post do dia ja feito. A rotina diaria nao mexe nestas datas."
 }
