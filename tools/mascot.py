@@ -1,6 +1,6 @@
 """Lume, o vagalume do Virou Versos (personagem original). draw_lume(t, size, mood) -> RGBA."""
 import math, numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 S = 1200  # canvas de desenho (supersample 2x sobre 600)
 PLUM = (58, 36, 82)
@@ -28,9 +28,51 @@ def _star(d, x, y, r, color):
     d.polygon(pts, fill=color)
 
 
+CONFETTI = [(255, 120, 140), (255, 210, 96), (120, 200, 255), (180, 140, 255), (130, 230, 170), (255, 160, 90)]
+
+
+def _confetti(img, t, n=26):
+    d = ImageDraw.Draw(img)
+    for i in range(n):
+        a = i * 2.399963
+        ph = (t / 6.0 * 2 + i * 0.137) % 1.0
+        rad = 330 + (i % 5) * 52
+        x = S / 2 + rad * math.cos(a) * 1.05
+        y = S * 0.18 + ph * S * 0.72 + 40 * math.sin(a * 2)
+        col = CONFETTI[i % len(CONFETTI)] + (235,)
+        if i % 3 == 0:
+            d.ellipse([x - 11, y - 11, x + 11, y + 11], fill=col)
+        elif i % 3 == 1:
+            _star(d, x, y, 18, col)
+        else:
+            w = 26
+            ang = a + t * 3
+            pts = [(x + math.cos(ang) * w, y + math.sin(ang) * 9), (x - math.cos(ang) * w, y - math.sin(ang) * 9)]
+            d.line(pts, fill=col, width=12)
+
+
+def _question(img, x, y, t):
+    img.alpha_composite(_radial(S, x, y, 120, GLOW, 1.3, 0.85))
+    d = ImageDraw.Draw(img)
+    f = ImageFont.truetype("/usr/share/fonts/opentype/inter/Inter-Bold.otf", 150)
+    d.ellipse([x - 62, y - 62, x + 62, y + 62], fill=(255, 244, 214), outline=PLUM, width=7)
+    d.text((x, y - 4 + 5 * math.sin(t * 2 * math.pi / 3)), "?", font=f, fill=PLUM, anchor="mm")
+
+
+def _mood_post(img, mood, t, qpos):
+    if mood == "doubt":
+        img = img.rotate(-7, resample=Image.BICUBIC, center=(S / 2, S * 0.75))
+        _question(img, qpos[0], qpos[1], t)
+    elif mood == "celebrate":
+        _confetti(img, t)
+    return img
+
+
 def draw_lume(t=0.0, size=600, mood="happy", glow=1.0):
     """t em segundos (loop de 6 s). mood: happy | wow | sleepy."""
     k = 2 * math.pi / 6.0
+    if mood == "sad":
+        glow *= 0.55
     bob = math.sin(t * k * 1.0) * 26
     sway = math.sin(t * k * 2.0) * 0.5
     pulse = 0.82 + 0.18 * math.sin(t * k * 3.0)
@@ -75,8 +117,13 @@ def draw_lume(t=0.0, size=600, mood="happy", glow=1.0):
     d.polygon(vp, fill=PLUM)
     # bracinhos
     arm = 14 * math.sin(t * k * 2 + 1)
-    d.ellipse([cx - 175, cy + 95 + arm, cx - 125, cy + 165 + arm], fill=CREAM, outline=PLUM, width=5)
-    d.ellipse([cx + 125, cy + 95 - arm, cx + 175, cy + 165 - arm], fill=CREAM, outline=PLUM, width=5)
+    if mood == "celebrate":
+        up = 18 * math.sin(t * k * 6)
+        d.ellipse([cx - 285, cy - 215 + up, cx - 225, cy - 125 + up], fill=CREAM, outline=PLUM, width=5)
+        d.ellipse([cx + 225, cy - 215 - up, cx + 285, cy - 125 - up], fill=CREAM, outline=PLUM, width=5)
+    else:
+        d.ellipse([cx - 175, cy + 95 + arm, cx - 125, cy + 165 + arm], fill=CREAM, outline=PLUM, width=5)
+        d.ellipse([cx + 125, cy + 95 - arm, cx + 175, cy + 165 - arm], fill=CREAM, outline=PLUM, width=5)
 
     # antenas
     for s in (-1, 1):
@@ -108,16 +155,35 @@ def draw_lume(t=0.0, size=600, mood="happy", glow=1.0):
     if mood == "sleepy":
         blink = 0.25
     ry = 44 * blink
-    rx = 30 * (1.12 if mood == "wow" else 1.0)
+    rx = 30 * (1.12 if mood in ("wow", "celebrate") else 1.0)
     for s in (-1, 1):
         ex, ey = hx + s * 68, hy - 8
-        d.ellipse([ex - rx, ey - ry, ex + rx, ey + ry], fill=PLUM)
+        if mood == "celebrate":
+            d.arc([ex - 30, ey - 22, ex + 30, ey + 28], start=200, end=340, fill=PLUM, width=10)
+            continue
+        look = (10, -8) if mood == "doubt" else (0, 0)
+        d.ellipse([ex - rx + look[0], ey - ry + look[1], ex + rx + look[0], ey + ry + look[1]], fill=PLUM)
         if blink > 0.5:
-            d.ellipse([ex - 12 + 5 * math.sin(t * k), ey - 26, ex + 4 + 5 * math.sin(t * k), ey - 10], fill=(255, 255, 255))
-            d.ellipse([ex + 6, ey + 8, ex + 16, ey + 18], fill=(255, 255, 255, 220))
+            d.ellipse([ex - 12 + look[0] + 5 * math.sin(t * k), ey - 26 + look[1], ex + 4 + look[0] + 5 * math.sin(t * k), ey - 10 + look[1]], fill=(255, 255, 255))
+            d.ellipse([ex + 6 + look[0], ey + 8 + look[1], ex + 16 + look[0], ey + 18 + look[1]], fill=(255, 255, 255, 220))
+    if mood == "sad":
+        for s in (-1, 1):
+            ex = hx + s * 68
+            d.line([ex + s * 30, hy - 66, ex - s * 30, hy - 92], fill=PLUM, width=8)
+        d.ellipse([hx + 76, hy + 44, hx + 104, hy + 92], fill=(150, 205, 255, 235), outline=PLUM, width=3)
+    if mood == "doubt":
+        d.arc([hx + 30, hy - 120, hx + 110, hy - 66], start=200, end=340, fill=PLUM, width=8)
+        d.line([hx - 100, hy - 72, hx - 38, hy - 72], fill=PLUM, width=8)
     # boca
     if mood == "wow":
         d.ellipse([hx - 16, hy + 58, hx + 16, hy + 96], fill=PLUM)
+    elif mood == "celebrate":
+        d.pieslice([hx - 46, hy + 30, hx + 46, hy + 110], start=0, end=180, fill=PLUM)
+        d.ellipse([hx - 24, hy + 70, hx + 24, hy + 104], fill=(255, 128, 140))
+    elif mood == "sad":
+        d.arc([hx - 30, hy + 62, hx + 30, hy + 108], start=200, end=340, fill=PLUM, width=8)
+    elif mood == "doubt":
+        d.line([hx - 30, hy + 66, hx - 10, hy + 58, hx + 10, hy + 72, hx + 30, hy + 62], fill=PLUM, width=8, joint="curve")
     else:
         d.arc([hx - 38, hy + 38, hx + 38, hy + 92], start=15, end=165, fill=PLUM, width=8)
 
@@ -131,6 +197,7 @@ def draw_lume(t=0.0, size=600, mood="happy", glow=1.0):
         al = int(255 * math.sin(ph * math.pi) ** 1.5)
         _star(d, sx, sy, 16 + 6 * (i % 3), (255, 236, 160, al))
 
+    img = _mood_post(img, mood, t, (cx + 250, cy - 340))
     return img.resize((size, size), Image.LANCZOS)
 
 
@@ -183,7 +250,7 @@ def draw_verso(t=0.0, size=600, mood="happy"):
     for s in (-1, 1):
         ear = Image.new("RGBA", (300, 420), (0, 0, 0, 0))
         ImageDraw.Draw(ear).ellipse([60, 20, 240, 400], fill=CARAMEL_D, outline=PLUM, width=7)
-        ang = s * (18 + 7 * math.sin(t * k * 3 + (0 if s < 0 else 1.3)))
+        ang = s * ((30 if mood == 'sad' else 18) + 7 * math.sin(t * k * 3 + (0 if s < 0 else 1.3)))
         ear = ear.rotate(ang, resample=Image.BICUBIC, expand=False)
         img.alpha_composite(ear, (int(cx + s * 215 - 150), int(cy - 125 - 180 + breathe * 0.2)))
     d = ImageDraw.Draw(img)
@@ -214,18 +281,38 @@ def draw_verso(t=0.0, size=600, mood="happy"):
     ry = 40 * blink
     for s in (-1, 1):
         ex, ey = hx + s * 92, hy - 55
-        d.ellipse([ex - 30, ey - ry, ex + 30, ey + ry], fill=PLUM)
+        if mood == "celebrate":
+            d.arc([ex - 30, ey - 22, ex + 30, ey + 28], start=200, end=340, fill=PLUM, width=10)
+            continue
+        look = (10, -8) if mood == "doubt" else (0, 0)
+        d.ellipse([ex - 30 + look[0], ey - ry + look[1], ex + 30 + look[0], ey + ry + look[1]], fill=PLUM)
         if blink > 0.5:
-            d.ellipse([ex - 14, ey - 26, ex + 4, ey - 8], fill=(255, 255, 255))
-            d.ellipse([ex + 8, ey + 8, ex + 18, ey + 18], fill=(255, 255, 255, 220))
+            d.ellipse([ex - 14 + look[0], ey - 26 + look[1], ex + 4 + look[0], ey - 8 + look[1]], fill=(255, 255, 255))
+            d.ellipse([ex + 8 + look[0], ey + 8 + look[1], ex + 18 + look[0], ey + 18 + look[1]], fill=(255, 255, 255, 220))
+    if mood == "doubt":
+        d.ellipse([hx + 92 - 14, hy - 150 - 12, hx + 92 + 14, hy - 150 + 12], fill=MUZZLE)
+    if mood == "sad":
+        for s in (-1, 1):
+            ex = hx + s * 92
+            d.line([ex + s * 34, hy - 122, ex - s * 34, hy - 150], fill=PLUM, width=8)
+        d.ellipse([hx + 106, hy - 36, hx + 136, hy + 14], fill=(150, 205, 255, 235), outline=PLUM, width=3)
     # focinho
     d.ellipse([hx - 44, hy + 8, hx + 44, hy + 58], fill=PLUM)
     d.ellipse([hx - 20, hy + 14, hx + 2, hy + 26], fill=(255, 255, 255, 200))
     d.line([hx, hy + 58, hx, hy + 92], fill=PLUM, width=7)
-    d.arc([hx - 62, hy + 60, hx, hy + 124], start=20, end=160, fill=PLUM, width=7)
-    d.arc([hx, hy + 60, hx + 62, hy + 124], start=20, end=160, fill=PLUM, width=7)
-    if mood != "sleepy":
-        tl = 8 * math.sin(t * k * 6)
-        d.ellipse([hx - 30, hy + 96, hx + 30, hy + 160 + tl], fill=(255, 128, 140), outline=PLUM, width=5)
-        d.line([hx, hy + 100, hx, hy + 150], fill=(224, 96, 112), width=4)
+    if mood == "celebrate":
+        d.pieslice([hx - 70, hy + 70, hx + 70, hy + 190], start=0, end=180, fill=PLUM, outline=PLUM)
+        d.ellipse([hx - 36, hy + 130, hx + 36, hy + 186], fill=(255, 128, 140))
+    elif mood == "sad":
+        d.arc([hx - 44, hy + 104, hx + 44, hy + 156], start=200, end=340, fill=PLUM, width=7)
+    elif mood == "doubt":
+        d.line([hx - 50, hy + 112, hx - 20, hy + 98, hx + 20, hy + 120, hx + 50, hy + 106], fill=PLUM, width=7, joint="curve")
+    else:
+        d.arc([hx - 62, hy + 60, hx, hy + 124], start=20, end=160, fill=PLUM, width=7)
+        d.arc([hx, hy + 60, hx + 62, hy + 124], start=20, end=160, fill=PLUM, width=7)
+        if mood != "sleepy":
+            tl = 8 * math.sin(t * k * 6)
+            d.ellipse([hx - 30, hy + 96, hx + 30, hy + 160 + tl], fill=(255, 128, 140), outline=PLUM, width=5)
+            d.line([hx, hy + 100, hx, hy + 150], fill=(224, 96, 112), width=4)
+    img = _mood_post(img, mood, t, (hx + 270, hy - 250))
     return img.resize((size, size), Image.LANCZOS)
