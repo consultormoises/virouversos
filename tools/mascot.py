@@ -136,3 +136,96 @@ def draw_lume(t=0.0, size=600, mood="happy", glow=1.0):
 
 if __name__ == "__main__":
     draw_lume(0.0).save("/tmp/lume_test.png")
+
+
+# ------------------------------------------------------------------
+# Verso, o cachorrinho caramelo do Virou Versos (personagem original)
+# ------------------------------------------------------------------
+CARAMEL = (222, 156, 92)
+CARAMEL_D = (178, 112, 58)
+MUZZLE = (250, 228, 190)
+
+
+def draw_verso(t=0.0, size=600, mood="happy"):
+    """Retorna RGBA. Loop de 6 s (rabo 3 balanços/s, respirar, piscar)."""
+    k = 2 * math.pi / 6.0
+    breathe = math.sin(t * k * 2) * 6
+    cx, cy = S / 2, S / 2 + 20
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+
+    # rabo (atrás)
+    wag = math.sin(t * 2 * math.pi * 3)
+    tip = (cx + 270 + 40 * wag, cy + 110 - 20 * abs(wag))
+    pts = [(cx + 140, cy + 380), (cx + 260, cy + 340), (cx + 300 + 20 * wag, cy + 230), tip]
+    d.line(pts, fill=PLUM, width=70, joint="curve")
+    d.line(pts, fill=CARAMEL, width=52, joint="curve")
+    d.ellipse([tip[0] - 26, tip[1] - 26, tip[0] + 26, tip[1] + 26], fill=CARAMEL)
+
+    # corpo
+    d.ellipse([cx - 195, cy + 70 + breathe * 0.3, cx + 195, cy + 440], fill=CARAMEL, outline=PLUM, width=7)
+    d.ellipse([cx - 92, cy + 150, cx + 92, cy + 410], fill=MUZZLE)
+    # patinhas
+    for s in (-1, 1):
+        d.ellipse([cx + s * 95 - 58, cy + 370, cx + s * 95 + 58, cy + 462], fill=MUZZLE, outline=PLUM, width=6)
+        for q in (-1, 1):
+            d.line([cx + s * 95 + q * 20, cy + 428, cx + s * 95 + q * 20, cy + 452], fill=PLUM, width=4)
+
+    # coleira + plaquinha com o V
+    d.rounded_rectangle([cx - 150, cy + 82, cx + 150, cy + 122], radius=20, fill=PLUM)
+    glow_tag = _radial(S, cx, cy + 150, 120, GLOW, 1.2, 0.95)
+    img.alpha_composite(glow_tag)
+    d = ImageDraw.Draw(img)
+    d.ellipse([cx - 40, cy + 112, cx + 40, cy + 192], fill=GOLD, outline=PLUM, width=5)
+    d.polygon([(cx - 22, cy + 134), (cx - 8, cy + 134), (cx, cy + 164), (cx + 8, cy + 134), (cx + 22, cy + 134), (cx + 6, cy + 178), (cx - 6, cy + 178)], fill=PLUM)
+
+    # orelhas caídas (mexem)
+    for s in (-1, 1):
+        ear = Image.new("RGBA", (300, 420), (0, 0, 0, 0))
+        ImageDraw.Draw(ear).ellipse([60, 20, 240, 400], fill=CARAMEL_D, outline=PLUM, width=7)
+        ang = s * (18 + 7 * math.sin(t * k * 3 + (0 if s < 0 else 1.3)))
+        ear = ear.rotate(ang, resample=Image.BICUBIC, expand=False)
+        img.alpha_composite(ear, (int(cx + s * 215 - 150), int(cy - 125 - 180 + breathe * 0.2)))
+    d = ImageDraw.Draw(img)
+
+    # cabeça
+    hx, hy = cx, cy - 105 + breathe * 0.3
+    d.ellipse([hx - 235, hy - 205, hx + 235, hy + 205], fill=CARAMEL, outline=PLUM, width=7)
+    d.ellipse([hx - 40, hy - 200, hx + 40, hy - 110], fill=MUZZLE)  # listra
+    d.ellipse([hx - 135, hy - 10, hx + 135, hy + 160], fill=MUZZLE)
+    # bochechas
+    ch = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    cd = ImageDraw.Draw(ch)
+    for s in (-1, 1):
+        cd.ellipse([hx + s * 170 - 36, hy + 40 - 22, hx + s * 170 + 36, hy + 40 + 22], fill=(255, 140, 150, 170))
+    img.alpha_composite(ch.filter(ImageFilter.GaussianBlur(6)))
+    d = ImageDraw.Draw(img)
+
+    # sobrancelhas-pintinha
+    for s in (-1, 1):
+        d.ellipse([hx + s * 92 - 14, hy - 120 - 12, hx + s * 92 + 14, hy - 120 + 12], fill=MUZZLE)
+    # olhos
+    bp = t % 3.0
+    blink = 1.0
+    if bp > 2.85:
+        blink = max(0.08, abs(bp - 2.925) / 0.075)
+    if mood == "sleepy":
+        blink = 0.25
+    ry = 40 * blink
+    for s in (-1, 1):
+        ex, ey = hx + s * 92, hy - 55
+        d.ellipse([ex - 30, ey - ry, ex + 30, ey + ry], fill=PLUM)
+        if blink > 0.5:
+            d.ellipse([ex - 14, ey - 26, ex + 4, ey - 8], fill=(255, 255, 255))
+            d.ellipse([ex + 8, ey + 8, ex + 18, ey + 18], fill=(255, 255, 255, 220))
+    # focinho
+    d.ellipse([hx - 44, hy + 8, hx + 44, hy + 58], fill=PLUM)
+    d.ellipse([hx - 20, hy + 14, hx + 2, hy + 26], fill=(255, 255, 255, 200))
+    d.line([hx, hy + 58, hx, hy + 92], fill=PLUM, width=7)
+    d.arc([hx - 62, hy + 60, hx, hy + 124], start=20, end=160, fill=PLUM, width=7)
+    d.arc([hx, hy + 60, hx + 62, hy + 124], start=20, end=160, fill=PLUM, width=7)
+    if mood != "sleepy":
+        tl = 8 * math.sin(t * k * 6)
+        d.ellipse([hx - 30, hy + 96, hx + 30, hy + 160 + tl], fill=(255, 128, 140), outline=PLUM, width=5)
+        d.line([hx, hy + 100, hx, hy + 150], fill=(224, 96, 112), width=4)
+    return img.resize((size, size), Image.LANCZOS)
