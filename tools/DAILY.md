@@ -71,3 +71,13 @@ Baseado em guias de Reels 2026 (Metricool, AdaptlyPost, Agenciagram; são blogs 
 5. **Legenda:** primeira linha repete o gancho (pergunta), pergunta pessoal, "Salve... e envie para...", máx. 4 hashtags, `mediaAltText`, `videoCoverMilliseconds` 1000 (a capa cai no título).
 6. **Sinais que medimos:** envios, salvamentos, alcance e seguidores ganhos por post (`getAnalyticsDataByMetrics`). Compare Reel x carrossel após 2 semanas.
 7. **Responder comentários** na primeira hora quando possível (isso é com o dono da conta).
+
+## Gatilhos de legenda que já funcionam (usar sempre; não inventar fórmula nova)
+Base: nosso melhor post até agora (poema do café, 11/11: maior alcance e único com salvamento) e o playbook do `WEEKLY.md` (pergunta pessoal +37% de comentários, pedir comentário +203%, pedir salvamento +92%; os números vêm de blogs de ferramentas e a amostra do perfil é pequena). Estrutura fixa da legenda:
+1. **Primeira linha** = pergunta ou curiosidade que qualquer pessoa entende, igual à capa, com 1 emoji.
+2. **Identificação:** uma frase "Se você já... / Se você anda..., esse poema é pra você." (a pessoa se vê no texto).
+3. **Marque alguém:** "Marque quem anda precisando..." (foi o que o post do café usou).
+4. **Pergunta pessoal** curta para comentar.
+5. **"Salve para reler e envie para [pessoa específica]".** Nunca pedir curtida.
+6. Máx. 4 hashtags, 1 delas de marca (#viroversos); sigla ou termo pouco conhecido só entre parênteses, nunca no gancho.
+7. Fato de notícia só com fonte lida no dia; tradição ou lenda sempre dita como tal ("dizem que", "conta a tradição").
