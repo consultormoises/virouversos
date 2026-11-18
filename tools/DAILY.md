@@ -64,7 +64,7 @@ Nunca: expor, humilhar ou "cancelar" ninguém; pessoa privada identificável; v�
 
 ## Padrão de qualidade do Reel (checar antes de agendar)
 Baseado em guias de Reels 2026 (Metricool, AdaptlyPost, Agenciagram; são blogs de ferramentas, não fonte oficial do Instagram) e testado aqui: os números do perfil ainda são pequenos, então trate como hipótese e meça.
-1. **Gancho no quadro 0:** o título em tela é PERGUNTA ou CURIOSIDADE de até 8 palavras (ex.: "Você conhece a Abayomi?"), visível já no primeiro quadro, sem fade de entrada nem vinheta lenta. Título só descritivo ("Abayomi") reprova, e o gancho também não pode depender de um termo que o público não conhece ("Você conhece a Abayomi?" só atrai quem já conhece): abra com a curiosidade ou o benefício visível ("Por que essa boneca não usa cola?") e revele o nome no meio do poema e na legenda.
+1. **Gancho no quadro 0:** o título em tela é PERGUNTA ou CURIOSIDADE de até 8 palavras (ex.: "Que boneca nasce de uma roupa rasgada?"), visível já no primeiro quadro, sem fade de entrada nem vinheta lenta. Título só descritivo ("Abayomi") reprova, e o gancho também não pode depender de um termo que o público não conhece ("Você conhece a Abayomi?" só atrai quem já conhece): abra com a curiosidade ou o benefício visível ("Que boneca nasce de uma roupa rasgada?") e revele o nome no meio do poema e na legenda.
 2. **Duração 25 a 40 s** (30 a 60 s é a faixa recomendada), com 4 a 6 versos.
 3. **Texto sempre na tela** (muita gente assiste sem som). Nada importante nos 250 px do topo e da base.
 4. **Final em loop:** o fim volta ao título e emenda no início (já feito em `tools/reels2.py`, `T_LOOP`). Fechamento com PERGUNTA pessoal via `cta_lines` e `cta_title="Salve e envie"` (o padrão). **Nunca pedir curtida.**
