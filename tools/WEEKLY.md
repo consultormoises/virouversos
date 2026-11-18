@@ -10,6 +10,8 @@ Esta rotina roda **toda segunda-feira de manhã** e prepara os 4 posts da semana
 - Ferramentas deste diretório: `tools/viz.py`, `tools/feed.py`, `tools/reels2.py`.
 
 ## Slots da semana
+> Atenção: horário e cadência vigentes estão em `tools/DAILY.md` (20:00 em todos os posts; 1 por dia até o dia 10, depois dia sim, dia não). A tabela abaixo é histórica.
+
 | Dia | Horário | Formato | Tema visual sugerido |
 |---|---|---|---|
 | Segunda | 19:00 | Carrossel | conforme o assunto (veja abaixo) |

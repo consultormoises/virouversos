@@ -1,11 +1,11 @@
 # Rotina DIÁRIA - Virou Versos (@virouversos)
-Roda todo dia de manhã e deixa agendado o post do dia no **melhor horário do dia da semana** (tabela abaixo; America/Sao_Paulo, blogId 7921319), com um assunto novo em alta, transformado em mensagem que **inspira, encoraja, aumenta a autoconfiança e faz o mundo ser um lugar melhor**.
+Roda todo dia de manhã e deixa agendado o post do dia às **20:00** (ver Horário único abaixo; America/Sao_Paulo, blogId 7921319), com um assunto novo em alta, transformado em mensagem que **inspira, encoraja, aumenta a autoconfiança e faz o mundo ser um lugar melhor**.
 Leia também `tools/WEEKLY.md` (ética, voz editorial, playbook de crescimento, passos técnicos 6 a 9: artes, GitHub, Metricool, state.json). Em conflito, a ÉTICA vence.
 
 ## Regras do dia
 1. Leia `tools/state.json`. Se a data de hoje estiver em `topical_done`, **não mexa**: já existe post do dia. Senão, faça o post de hoje e acrescente a data ao `topical_done`.
 2. Se já existir post agendado para hoje no Metricool (getScheduledPosts) em data não protegida, **atualize-o** (updateScheduledPost) em vez de criar outro: no máximo 1 post por dia.
-3. Formato: segunda a quinta, sábado e domingo = **carrossel** (cover + 4 a 6 slides + slide final automático). **Sexta = Reel** animado (build_reel, 25 a 35 s). Horário pela tabela abaixo. Se o horário do dia já passou, use a próxima hora cheia futura (nunca no passado).
+3. Formato: segunda a quinta, sábado e domingo = **carrossel** (cover + 4 a 6 slides + slide final automático). **Sexta = Reel** animado (build_reel, 25 a 35 s). Horário: 20:00 (ver abaixo). Se já passou, use a próxima hora cheia futura (nunca no passado). Respeite a Cadência mensal abaixo.
 4. Assunto: 1 assunto novo por dia, em alta HOJE (Google Trends BR: trends.google.com/trending?geo=BR, manchetes do dia). Pegue o que está em alta e vire **incentivo para o dia a dia**: autoestima, gentileza, coragem, recomeço, gratidão, união. Nada de citar pessoas, marcas ou partidos; o assunto só é o ponto de partida (ex.: "dólar hoje" vira "seu valor não oscila"). Se o assunto for triste ou polêmico, escolha outro ou o ângulo de cuidado e esperança.
 
 ## Fórmula AIDA (obrigatória)
@@ -26,8 +26,16 @@ Fofo, caloroso, simples, no português do dia a dia. Frases curtas. Encoraje sem
 ## Fechamento
 Commit/push (artes + state.json). Resumo curto: assunto, fonte (link), título/capa, horário, link do planner, "checagem ética feita".
 
-## Horários (dados do Metricool para este perfil, Instagram)
-Segunda 18:00 | Terça 17:00 | Quarta 18:00 | Quinta 20:00 | Sexta 17:00 (Reel) | Sábado 18:00 | Domingo 20:00.
+## Horário único: 20:00 (America/Sao_Paulo)
+Todos os posts saem às **20:00**, qualquer dia da semana (melhor média de audiência do Instagram deste perfil, segundo `getBestTimeToPostByNetwork`, e o mais estável entre os dias). Se 20:00 já passou, use a próxima hora cheia futura (nunca no passado).
+
+## Cadência mensal (limite do plano gratuito: 20 posts publicados por mês, zera no dia 1)
+- Dias 1 a 10 do mês: **1 post por dia**.
+- Do dia 11 em diante: **dia sim, dia não**, em dias pares (12, 14, 16, ... 30), até completar os 20. Nunca deixe mais de 1 dia seguido sem post.
+- Dezembro/2026: posts nos dias 1 a 10, 12, 14, 16, 18, 20, 22, 24, 26, 28 e 30 (dias 11, 25 e 31 sem post). Sextas com Reel: 4 e 18.
+- Novembro/2026 (mês de transição, saldo ~14 posts em 13 dias): 1 post por dia até o dia 30.
+- Antes de agendar, confira o saldo do mês (posts publicados + agendados no mês); se já chegou a 20, não agende.
+- Em dia sem post pela cadência, não crie post nem marque `topical_done`.
 A cada ~2 meses, reconsulte `getBestTimeToPostByNetwork` (instagram, blogId 7921319) e ajuste esta tabela.
 
 ## Personagens (Lume e Verso) e expressões
