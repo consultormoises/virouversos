@@ -6,7 +6,7 @@ Leia também `tools/WEEKLY.md` (ética, voz editorial, playbook de crescimento, 
 1. Leia `tools/state.json`. Se a data de hoje estiver em `topical_done`, **não mexa**: já existe post do dia. Senão, faça o post de hoje e acrescente a data ao `topical_done`.
 2. Se já existir post agendado para hoje no Metricool (getScheduledPosts) em data não protegida, **atualize-o** (updateScheduledPost) em vez de criar outro: no máximo 1 post por dia.
 3. Formato (padrão **2 Reels : 1 carrossel**, sem relação com o dia da semana): olhe os 2 posts imediatamente anteriores a hoje no Metricool (publicados ou agendados). Se os dois foram Reel, hoje é **carrossel** (cover + 4 a 6 slides + slide final automático); caso contrário, hoje é **Reel** animado (build_reel, 25 a 35 s). Imagem única não entra mais na rotina. Horário: 20:00 (ver abaixo). Se já passou, use a próxima hora cheia futura (nunca no passado). Respeite a Cadência mensal abaixo.
-4. Assunto: 1 assunto novo por dia, em alta HOJE (Google Trends BR: trends.google.com/trending?geo=BR, manchetes do dia). Pegue o que está em alta e vire **incentivo para o dia a dia**: autoestima, gentileza, coragem, recomeço, gratidão, união. Nada de citar pessoas, marcas ou partidos; o assunto só é o ponto de partida (ex.: "dólar hoje" vira "seu valor não oscila"). Se o assunto for triste ou polêmico, escolha outro ou o ângulo de cuidado e esperança.
+4. Assunto: 1 por dia, **não é notícia**. É comportamento humano e vida real: ver "Pilares de conteúdo" abaixo. Notícia só entra como porta de entrada quando for sobre PESSOAS (história que repercutiu), nunca como tema (nada de clima/COP, economia, política, cotação, números de decreto). Sem pessoa nomeada, sem marca, sem partido. Se o assunto for triste ou polêmico, use o ângulo de cuidado e esperança.
 
 ## Fórmula AIDA (obrigatória)
 - **A**tenção (capa): título curto, simples e do dia a dia, no máximo 6 palavras, que prenda o olhar à primeira vista (ex.: "Seu valor não oscila", "Hoje você pode recomeçar"). Fale com "você". Sem jargão.
@@ -52,13 +52,21 @@ Todo post novo usa os mascotes (`tools/mascot.py`, `tools/stamp.py`; exemplo em 
 ## Gancho da capa (obrigatório)
 Capa e primeira linha da legenda começam com PERGUNTA ou CURIOSIDADE que faça deslizar: "Você sabia que...?", "Qual é...?", "O que você ainda...?", um fato real surpreendente do assunto da semana. Evitar título só descritivo/poético ("Seu valor não oscila", "Balanço"). Ética: sem sensacionalismo, sem explorar tragédia, sem falsa urgência; o fato citado precisa ser verdadeiro e ter fonte. Script de referência: `tools/rehook.py` (arquivos h_slide_NN / h_post).
 
-## Escolha do assunto (o que mais conecta à vida das pessoas)
-Prioridade: custo de vida no mercado/feira e contas do mês, trabalho e rotina, trânsito, calor/chuva do dia, escola/provas, saúde e sono, família e relacionamentos, redes sociais, TV/novela/reality/música/esporte e o "mundo dos famosos" como porta de entrada.
-Evitar: cotação de dólar, jargão econômico, política institucional, assuntos distantes do cotidiano.
-Fofoca/celebridade: só como FENÔMENO, sem nomes ("o término que parou a internet", "o reality da semana", "a treta do momento"); depois virar para o mundo real ("e o seu relacionamento? quem está do seu lado de verdade?"). Nunca repetir boato, acusação ou vida privada; só o que fonte confiável noticiou; nunca citar pessoas reais, marcas ou políticos pelo nome.
+## Pilares de conteúdo (o que a página fala; alternar entre eles)
+1. **Autoestima e confiança:** valor próprio, começar mesmo com medo, "você é capaz", não precisar de aprovação.
+2. **Sucesso e notoriedade:** como pessoas comuns conquistam espaço, constância, humildade ao crescer, o que fica depois do aplauso, aparecer sem se perder.
+3. **Esperança e fé:** recomeço, "vai passar", gratidão, acreditar no que ainda não se vê. Fé em sentido amplo e inclusivo (sem pregar religião específica nem criticar crença alguma).
+4. **Bondade e gentileza:** gestos pequenos, quem ajuda sem plateia, ser a pessoa que faz diferença no dia de alguém.
+5. **Reflexão sobre comportamentos ruins:** inveja, indiferença, julgamento, mentira, "falar mal por trás", quem some quando você precisa, humilhar para parecer grande, só aparecer na hora boa. Sempre no "a gente" ou no "quem", sem apontar pessoa, grupo ou caso real; termina com saída construtiva (como agir diferente, como se proteger, como ser quem não faz isso).
+6. **Cenas do dia a dia:** ônibus, café, mensagem não respondida, família à mesa, segunda-feira, cansaço, o "estou bem" que não é.
+7. **Gente que ganhou repercussão:** ver seção abaixo.
 
-## Pessoas que viralizaram nas redes (fonte de assunto)
-Priorizar a história viral da semana de GENTE COMUM com lado positivo: idosa que viralizou fazendo algo inesperado, gesto de gentileza filmado, superação, talento descoberto, vizinhança que se mobilizou, criança/pet fofo. Buscar em canaltech "virais da semana", G1 Fato ou Fake/Pop, UOL, Folha, portais regionais.
+Como escolher o dia: olhe o que as pessoas estão sentindo e conversando hoje (o que repercutiu nas redes, a data do dia, a semana do mês, época do ano, calor/chuva só como cenário, nunca como tema) e escolha o pilar que melhor responde a isso. Pode olhar Google Trends e portais só para sentir o clima das pessoas, nunca para pegar a notícia.
+Evitar: notícia dura, números oficiais, política institucional, economia, cotação, clima/meio ambiente como pauta, jargão.
+Fofoca/celebridade: só como FENÔMENO, sem nomes; depois virar para o mundo real ("e o seu relacionamento? quem está do seu lado de verdade?"). Nunca repetir boato, acusação ou vida privada; nunca citar pessoas reais, marcas ou políticos pelo nome.
+
+## Gente que ganhou repercussão (pilar 7)
+Priorizar histórias de pessoas, sobretudo GENTE COMUM, que repercutiram e têm lado positivo ou lição (quem virou notícia por talento, constância, gentileza, superação, ou ganhou notoriedade de um jeito inesperado). Pode usar o fato como gancho e então tirar a lição de comportamento (por que isso tocou tanta gente? o que a gente faria?). Exemplos de pessoas: idosa que viralizou fazendo algo inesperado, gesto de gentileza filmado, superação, talento descoberto, vizinhança que se mobilizou, criança/pet fofo. Buscar em canaltech "virais da semana", G1 Fato ou Fake/Pop, UOL, Folha, portais regionais.
 Como contar: descrever a cena sem nome e sem identificar (ex.: "uma senhora de 93 anos empinando pipa"), sem rosto/imagem da pessoa, só o fato noticiado. Virar para o leitor: "E você, o que ainda faria sem pedir licença?".
 Nunca: expor, humilhar ou "cancelar" ninguém; pessoa privada identificável; vídeo de criança; pegadinha/constrangimento; boato; polêmica de influenciador. Se a história viral for de humilhação ou ataque a alguém, usar só o ângulo de acolhimento ao anônimo, sem repetir o caso, ou escolher outro.
 
