@@ -1,3 +1,5 @@
+> ORIENTAÇÃO VIGENTE DE ASSUNTO: a página NÃO é de notícia. Os temas seguem os "Pilares de conteúdo" de `tools/DAILY.md` (autoestima, sucesso e notoriedade, esperança e fé, bondade, reflexão sobre comportamentos ruins, cenas do dia a dia, gente que ganhou repercussão). Onde este arquivo mandar pesquisar manchetes, use-as só para sentir o clima das pessoas. Em conflito, vale o DAILY.md e a ética.
+
 # Rotina semanal – Virou Versos (@virouversos)
 
 A página transforma os **assuntos em alta da semana** em versos **reflexivos e humanos**.
