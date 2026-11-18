@@ -5,7 +5,7 @@ Leia também `tools/WEEKLY.md` (ética, voz editorial, playbook de crescimento, 
 ## Regras do dia
 1. Leia `tools/state.json`. Se a data de hoje estiver em `topical_done`, **não mexa**: já existe post do dia. Senão, faça o post de hoje e acrescente a data ao `topical_done`.
 2. Se já existir post agendado para hoje no Metricool (getScheduledPosts) em data não protegida, **atualize-o** (updateScheduledPost) em vez de criar outro: no máximo 1 post por dia.
-3. Formato: segunda a quinta, sábado e domingo = **carrossel** (cover + 4 a 6 slides + slide final automático). **Sexta = Reel** animado (build_reel, 25 a 35 s). Horário: 20:00 (ver abaixo). Se já passou, use a próxima hora cheia futura (nunca no passado). Respeite a Cadência mensal abaixo.
+3. Formato (padrão **2 Reels : 1 carrossel**, sem relação com o dia da semana): olhe os 2 posts imediatamente anteriores a hoje no Metricool (publicados ou agendados). Se os dois foram Reel, hoje é **carrossel** (cover + 4 a 6 slides + slide final automático); caso contrário, hoje é **Reel** animado (build_reel, 25 a 35 s). Imagem única não entra mais na rotina. Horário: 20:00 (ver abaixo). Se já passou, use a próxima hora cheia futura (nunca no passado). Respeite a Cadência mensal abaixo.
 4. Assunto: 1 assunto novo por dia, em alta HOJE (Google Trends BR: trends.google.com/trending?geo=BR, manchetes do dia). Pegue o que está em alta e vire **incentivo para o dia a dia**: autoestima, gentileza, coragem, recomeço, gratidão, união. Nada de citar pessoas, marcas ou partidos; o assunto só é o ponto de partida (ex.: "dólar hoje" vira "seu valor não oscila"). Se o assunto for triste ou polêmico, escolha outro ou o ângulo de cuidado e esperança.
 
 ## Fórmula AIDA (obrigatória)
@@ -61,3 +61,13 @@ Fofoca/celebridade: só como FENÔMENO, sem nomes ("o término que parou a inter
 Priorizar a história viral da semana de GENTE COMUM com lado positivo: idosa que viralizou fazendo algo inesperado, gesto de gentileza filmado, superação, talento descoberto, vizinhança que se mobilizou, criança/pet fofo. Buscar em canaltech "virais da semana", G1 Fato ou Fake/Pop, UOL, Folha, portais regionais.
 Como contar: descrever a cena sem nome e sem identificar (ex.: "uma senhora de 93 anos empinando pipa"), sem rosto/imagem da pessoa, só o fato noticiado. Virar para o leitor: "E você, o que ainda faria sem pedir licença?".
 Nunca: expor, humilhar ou "cancelar" ninguém; pessoa privada identificável; vídeo de criança; pegadinha/constrangimento; boato; polêmica de influenciador. Se a história viral for de humilhação ou ataque a alguém, usar só o ângulo de acolhimento ao anônimo, sem repetir o caso, ou escolher outro.
+
+## Padrão de qualidade do Reel (checar antes de agendar)
+Baseado em guias de Reels 2026 (Metricool, AdaptlyPost, Agenciagram; são blogs de ferramentas, não fonte oficial do Instagram) e testado aqui: os números do perfil ainda são pequenos, então trate como hipótese e meça.
+1. **Gancho no quadro 0:** o título em tela é PERGUNTA ou CURIOSIDADE de até 8 palavras (ex.: "Você conhece a Abayomi?"), visível já no primeiro quadro, sem fade de entrada nem vinheta lenta. Título só descritivo ("Abayomi") reprova.
+2. **Duração 25 a 40 s** (30 a 60 s é a faixa recomendada), com 4 a 6 versos.
+3. **Texto sempre na tela** (muita gente assiste sem som). Nada importante nos 250 px do topo e da base.
+4. **Final em loop:** o fim volta ao título e emenda no início (já feito em `tools/reels2.py`, `T_LOOP`). Fechamento com PERGUNTA pessoal via `cta_lines` e `cta_title="Salve e envie"` (o padrão). **Nunca pedir curtida.**
+5. **Legenda:** primeira linha repete o gancho (pergunta), pergunta pessoal, "Salve... e envie para...", máx. 4 hashtags, `mediaAltText`, `videoCoverMilliseconds` 1000 (a capa cai no título).
+6. **Sinais que medimos:** envios, salvamentos, alcance e seguidores ganhos por post (`getAnalyticsDataByMetrics`). Compare Reel x carrossel após 2 semanas.
+7. **Responder comentários** na primeira hora quando possível (isso é com o dono da conta).

@@ -93,7 +93,7 @@ def synth_audio(path, dur, chimes, key, seed=3):
 
 
 # ---------------------------------------------------------------- construção do reel
-def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=None, cta_lines=None):
+def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=None, cta_lines=None, cta_title=None):
     th = THEMES[theme_name]
     key = th["key"]
     rng = random.Random(seed)
@@ -139,12 +139,12 @@ def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=
     fp = font(LORA_I, 76, "Medium Italic")
     lh = int(76 * 1.36)
     gap = 26
-    T_TITLE = 3.0
-    t = 0.2
+    T_TITLE = 2.4  # gancho: visivel desde o quadro 0, cabe nos primeiros ~2 s
+    t = 0.0
     events = []
     chimes = []
     title_ev = dict(t0=t, t1=t + T_TITLE)
-    chimes.append(t + 0.4)
+    chimes.append(t + 0.15)
     t = title_ev["t1"] + 0.1
     scenes = []
     for st in stanzas:
@@ -168,9 +168,10 @@ def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=
         scenes.append(dict(v=vs, t0=t, t1=t_end))
         t = t_end + 0.5
     T_OUT0 = t
-    T_OUT1 = t + 4.0
+    T_LOOP = T_OUT0 + 2.8   # a partir daqui o titulo volta (fim emenda no inicio = loop)
+    T_OUT1 = T_LOOP + 1.2
     chimes.append(T_OUT0 + 0.5)
-    dur = T_OUT1 + 0.8
+    dur = T_OUT1
 
     # título
     f_title = None
@@ -203,15 +204,14 @@ def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=
     Co = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     cd = ImageDraw.Draw(Co)
     cy0 = int(H * 0.5 - 320)
-    cd.text((W // 2, cy0), "Gostou?", font=font(LORA, 104, "Bold"), fill=th["fg"] + (255,), anchor="mm")
+    cd.text((W // 2, cy0), cta_title or "Salve e envie", font=font(LORA, 96, "Bold"), fill=th["fg"] + (255,), anchor="mm")
     draw_ornament(cd, W // 2, cy0 + 100, 140, th["accent"])
     cx = W // 2
-    icon_heart(cd, cx - 220, cy0 + 235, 78, th["accent"])
-    icon_bookmark(cd, cx, cy0 + 235, 80, th["accent"])
-    icon_send(cd, cx + 220, cy0 + 235, 80, th["accent"])
-    for i, tx in enumerate(["Curta", "Salve", "Envie"]):
-        cd.text((cx - 220 + 220 * i, cy0 + 325), tx, font=font(INTER_M, 28), fill=th["fg"] + (225,), anchor="mm")
-    for i, tx in enumerate(cta_lines or ["Siga para mais versos"]):
+    icon_bookmark(cd, cx - 140, cy0 + 235, 80, th["accent"])
+    icon_send(cd, cx + 140, cy0 + 235, 80, th["accent"])
+    for i, tx in enumerate(["Salve", "Envie"]):
+        cd.text((cx - 140 + 280 * i, cy0 + 325), tx, font=font(INTER_M, 28), fill=th["fg"] + (225,), anchor="mm")
+    for i, tx in enumerate(cta_lines or ["Conta nos comentários"]):
         cd.text((cx, cy0 + 450 + 60 * i), tx, font=font(LORA_I, 50, "Medium Italic"), fill=th["fg"] + (235,), anchor="mm")
     cd.text((cx, cy0 + 560), "@virouversos", font=font(INTER, 58), fill=th["fg"] + (255,), anchor="mm")
     co_rgb, co_al = prep_layer(np.array(Co))
@@ -251,13 +251,14 @@ def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=
             k = 0.25 + 0.55 * (0.5 + 0.5 * math.sin(tm * p["sp"] * 1.4 + p["ph"]))
             blit_add(f, sprites[p["r"]], x, y, k * (0.55 if p["r"] >= 14 else 1.0))
         # cabeçalho e rodapé
-        blend(f, hd_rgb, hd_al, 0, ease((tm - 0.1) / 0.8) * (1 - ease((tm - (T_OUT1 - 0.3)) / 0.6) * 0.0))
+        blend(f, hd_rgb, hd_al, 0, 1.0)
         # título
-        a_t = ease((tm - title_ev["t0"]) / 0.9) * (1 - ease((tm - (title_ev["t1"] - 0.7)) / 0.7))
+        a_t = 1 - ease((tm - (title_ev["t1"] - 0.6)) / 0.6)
+        if tm >= T_LOOP:
+            a_t = ease((tm - T_LOOP) / 0.6)
         if a_t > 0:
-            rise = (1 - ease((tm - title_ev["t0"]) / 0.9)) * 30
-            blend(f, t_rgb, t_al, t_y + rise, a_t)
-            blend(f, lb_rgb, lb_al, lb_y + rise, a_t)
+            blend(f, t_rgb, t_al, t_y, a_t)
+            blend(f, lb_rgb, lb_al, lb_y, a_t)
         # cenas
         for sc in scenes:
             fade_out = 1 - ease((tm - (sc["t1"] - 0.7)) / 0.7)
@@ -270,7 +271,7 @@ def build_reel(theme_name, title, stanzas, out_mp4, label=None, seed=5, preview=
                 blend(f, v["rgb"], v["al"], v["y"] + (1 - e) * 34, e * fade_out)
         # outro
         if tm >= T_OUT0:
-            a_o = ease((tm - T_OUT0) / 0.9)
+            a_o = ease((tm - T_OUT0) / 0.9) * (1 - ease((tm - T_LOOP) / 0.6))
             pulse = 1.0 + 0.012 * math.sin(tm * 2.0)
             blend(f, sh_rgb, sh_al, 0, a_o)
             blend(f, co_rgb, co_al, 0, a_o)
