@@ -9,8 +9,92 @@ from reels2 import *  # noqa: F401,F403  (viz helpers, ease, blend, synth_audio.
 FADE = 0.55  # fade longo e suave entre frases
 
 
+# ---------------------------------------------------------------- trilha original (piano suave + pad)
+MOODS = {
+    # (nota raiz MIDI, acordes como graus em semitons + qualidade, bpm)
+    "hope": dict(root=60, bpm=84, prog=[(0, "M"), (7, "M"), (9, "m"), (5, "M")]),     # C G Am F
+    "calm": dict(root=57, bpm=66, prog=[(0, "m"), (8, "M"), (3, "M"), (10, "M")]),    # Am F C G
+    "rise": dict(root=62, bpm=78, prog=[(0, "M"), (9, "m"), (5, "M"), (7, "M")]),     # D Bm G A
+}
+TRI = {"M": [0, 4, 7], "m": [0, 3, 7]}
+
+
+def _mf(m):
+    return 440.0 * 2 ** ((m - 69) / 12.0)
+
+
+def synth_music(path, dur, mood="hope", seed=3):
+    sr = 44100
+    n = int(dur * sr)
+    cfg = MOODS[mood]
+    rng = random.Random(seed)
+    beat = 60.0 / cfg["bpm"]
+    bar = 4 * beat
+    out = np.zeros(n)
+    pad = np.zeros(n)
+    t_all = np.arange(n) / sr
+
+    def pluck(freq, t0, ln, amp):
+        i0 = int(t0 * sr)
+        m = min(n - i0, int(ln * sr))
+        if m <= 0:
+            return
+        tt = np.arange(m) / sr
+        env = np.exp(-tt * 2.6) * (1 - np.exp(-tt * 220))
+        tone = np.sin(2 * math.pi * freq * tt) + 0.35 * np.sin(2 * math.pi * freq * 2 * tt) * np.exp(-tt * 4) \
+            + 0.12 * np.sin(2 * math.pi * freq * 3 * tt) * np.exp(-tt * 7)
+        out[i0:i0 + m] += amp * env * tone
+
+    nbars = int(dur / bar) + 1
+    for b in range(nbars):
+        deg, q = cfg["prog"][b % len(cfg["prog"])]
+        base = cfg["root"] + deg
+        notes = [base + x for x in TRI[q]]
+        t0 = b * bar
+        # baixo (nota raiz, oitava abaixo) no 1o tempo
+        pluck(_mf(base - 12), t0, bar * 0.95, 0.20)
+        # arpejo em colcheias
+        pat = [0, 1, 2, 1, 2, 1, 0, 1] if mood != "calm" else [0, 2, 1, 2, 0, 2, 1, 2]
+        for k, idx in enumerate(pat):
+            tt0 = t0 + k * beat * 0.5
+            if tt0 >= dur:
+                break
+            nt = notes[idx % 3] + (12 if idx == 2 and k % 4 == 2 else 0)
+            vel = 0.16 + 0.05 * (k % 2 == 0) + rng.uniform(-0.015, 0.015)
+            pluck(_mf(nt + 12), tt0 + rng.uniform(0, 0.012), 2.2, vel)
+        # pad suave sustentando o acorde
+        i0 = int(t0 * sr)
+        m = min(n - i0, int((bar + 0.6) * sr))
+        if m > 0:
+            tt = np.arange(m) / sr
+            env = np.minimum(1, tt / 0.9) * np.minimum(1, (bar + 0.6 - tt) / 0.9)
+            for x in notes:
+                for det in (-0.5, 0.5):
+                    pad[i0:i0 + m] += 0.035 * env * np.sin(2 * math.pi * (_mf(x) + det) * tt)
+    fade = np.minimum(1, t_all / 1.2) * np.minimum(1, (dur - t_all) / 2.0)
+    mono = (out + pad) * fade
+
+    def delay(x, sec, g):
+        d = int(sec * sr)
+        y = np.zeros_like(x)
+        y[d:] = x[:-d] * g
+        return y
+    wet = mono + delay(mono, beat * 0.75, 0.30) + delay(mono, beat * 1.5, 0.16)
+    L = wet
+    R = wet + delay(wet, 0.015, 1.0) * 0.9
+    st = np.stack([L, R], 1)
+    st = st / max(1e-6, np.abs(st).max()) * 0.8
+    import wave
+    pcm = (st * 32767).astype(np.int16)
+    with wave.open(path, "wb") as wf:
+        wf.setnchannels(2)
+        wf.setsampwidth(2)
+        wf.setframerate(sr)
+        wf.writeframes(pcm.tobytes())
+
+
 def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, out_mp4,
-                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6):
+                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6, mood="hope"):
     """segs: [(texto, t0)] das frases do poema (fim = t0 da proxima; ultima termina em cta_from)."""
     th = THEMES[theme_name]
     key = th["key"]
@@ -172,10 +256,10 @@ def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, 
         return dur
 
     pad = out_mp4.replace(".mp4", "_pad.wav")
-    synth_audio(pad, dur, [], key, seed)
+    synth_music(pad, dur, mood, seed)
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
            "-i", pad, "-i", narr_mp3,
-           "-filter_complex", "[1:a]volume=0.20[p];[2:a]volume=1.25[n];[p][n]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]",
+           "-filter_complex", "[1:a]volume=0.55[m];[2:a]volume=1.25,asplit=2[n][sc];[m][sc]sidechaincompress=threshold=0.02:ratio=9:attack=25:release=500[mc];[mc][n]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]",
            "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-maxrate", "6M", "-bufsize", "12M",
            "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-t", f"{dur:.2f}", "-movflags", "+faststart", out_mp4]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
