@@ -104,7 +104,7 @@ def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, 
         cd.text((cx - 140 + 280 * i, cy0 + 325), tx, font=font(INTER_M, 28), fill=th["fg"] + (225,), anchor="mm")
     for i, tx in enumerate(cta_lines or ["Conta nos comentários"]):
         cd.text((cx, cy0 + 450 + 60 * i), tx, font=font(LORA_I, 50, "Medium Italic"), fill=th["fg"] + (235,), anchor="mm")
-    cd.text((cx, cy0 + 560), "@virouversos", font=font(INTER, 58), fill=th["fg"] + (255,), anchor="mm")
+    cd.text((cx, cy0 + 450 + 60 * len(cta_lines or [0]) + 50), "@virouversos", font=font(INTER, 58), fill=th["fg"] + (255,), anchor="mm")
     co_rgb, co_al = prep_layer(np.array(Co))
     sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     sh.putalpha(Co.split()[3].filter(ImageFilter.GaussianBlur(14)).point(lambda v: int(v * 0.5)))
