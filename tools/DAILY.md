@@ -96,3 +96,13 @@ Base: nosso melhor post até agora (poema do café, 11/11: maior alcance e únic
 5. **"Salve para reler e envie para [pessoa específica]".** Nunca pedir curtida.
 6. Máx. 4 hashtags, 1 delas de marca (#viroversos); sigla ou termo pouco conhecido só entre parênteses, nunca no gancho.
 7. Fato de notícia só com fonte lida no dia; tradição ou lenda sempre dita como tal ("dizem que", "conta a tradição").
+
+## Modelo de Reel v3 (narrado) — padrão a partir de 20/11/2026
+Pedido do dono: gancho mais forte, nome do famoso em destaque, ritmo mais lento e voz humana. Script: `tools/reels3.py` (exemplo: `tools/reel3_zaynara_exemplo.py`).
+1. **Quadro 0:** o NOME do famoso em letras gigantes (acento dourado) + pergunta de curiosidade de até 8 palavras ("Zaynara foi de palha ao Grammy. Por quê?"). Visível desde o primeiro quadro, sem fade de entrada. A voz já diz o gancho no 1º segundo. Respeitar as regras de nome do "Pilares/Nomes" acima (fato comprovado, mensagem positiva, poema sem nome).
+2. **Voz narrando** (ElevenLabs `creative_generate_speech`, voz "Mark — Emotional & Expressive", `eleven_v4`, 1 geração, ~4 centavos de dólar por Reel; usar "..." entre frases para criar pausas). O texto na tela acompanha a voz; os tempos vêm de `ffmpeg silencedetect` no mp3.
+3. **Ritmo lento:** cada frase fica 3 a 4 s na tela, fade de 0,55 s (nada de cortes rápidos). Duração total 25 a 35 s. Barra de progresso fina embaixo. Música só como pad baixo (20%) sob a voz.
+4. **Fechamento falado:** pergunta pessoal + "Conta nos comentários" + "Salve e envie para...". Saúde mental: CVV 188 falado e escrito na tela. O gancho volta no fim (loop).
+5. **Legenda:** 1ª linha = o mesmo gancho (nome + pergunta), depois fato com fonte ("segundo..."), "Se você... esse poema é pra você", marcar alguém, pergunta, "Salve... e envie...", máx. 4 hashtags, `mediaAltText` com a transcrição da voz.
+6. **Imagens:** cenas ilustradas originais. Sem foto/vídeo de pessoa pública baixado da internet (decisão do assistente, não da página). Material próprio ou autorizado enviado pelo dono pode ser usado.
+7. **Base da pesquisa (hipóteses, fontes são blogs de ferramentas, não o Instagram):** gancho claro nos 1 a 3 s com até 7 palavras; fala nos primeiros 3 s e rosto/voz aumentam retenção segundo estudo Emplifi citado pelo Pulse/Social Media Today; salvamentos e envios pesam mais que curtidas; loop e payoff sem enrolação. Medir envios, salvamentos e alcance dos Reels v3 contra os anteriores após 2 semanas.
