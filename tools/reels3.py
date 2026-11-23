@@ -94,7 +94,7 @@ def synth_music(path, dur, mood="hope", seed=3):
 
 
 def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, out_mp4,
-                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6, mood="hope", music_vol=0.55):
+                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6, mood="hope", music_vol=0.55, photo=None):
     """segs: [(texto, t0)] das frases do poema (fim = t0 da proxima; ultima termina em cta_from)."""
     th = THEMES[theme_name]
     key = th["key"]
@@ -153,6 +153,35 @@ def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, 
     y_nm = int(H * 0.47 - tot / 2)
     y_q = y_nm + nm_arr.shape[0] + gap_h
     hook_end = segs[0][1] - 0.15 if segs else 3.0
+    ph_rgb = ph_al = None
+    if photo:
+        # foto fornecida/autorizada pelo dono: recorte quadrado em circulo com anel na cor de destaque
+        D = 380
+        im = Image.open(photo).convert("RGB")
+        w0, h0 = im.size
+        side = min(w0, h0)
+        cx0 = int(w0 * 0.49 - side / 2)
+        cx0 = max(0, min(w0 - side, cx0))
+        im = im.crop((cx0, 0, cx0 + side, side)).resize((D, D), Image.LANCZOS)
+        PW = D + 120
+        Ph = Image.new("RGBA", (PW, PW), (0, 0, 0, 0))
+        glow = Image.new("RGBA", (PW, PW), (0, 0, 0, 0))
+        gd = ImageDraw.Draw(glow)
+        gd.ellipse((50, 50, PW - 50, PW - 50), fill=tuple(acc) + (170,))
+        glow = glow.filter(ImageFilter.GaussianBlur(22))
+        Ph.alpha_composite(glow)
+        ring = Image.new("RGBA", (PW, PW), (0, 0, 0, 0))
+        ImageDraw.Draw(ring).ellipse((60 - 8, 60 - 8, PW - 60 + 8, PW - 60 + 8), fill=tuple(acc) + (255,))
+        Ph.alpha_composite(ring)
+        mk = Image.new("L", (D, D), 0)
+        ImageDraw.Draw(mk).ellipse((0, 0, D - 1, D - 1), fill=255)
+        Ph.paste(im, (60, 60), mk)
+        Pw = Image.new("RGBA", (W, PW), (0, 0, 0, 0))
+        Pw.alpha_composite(Ph, ((W - PW) // 2, 0))
+        ph_rgb, ph_al = prep_layer(np.array(Pw))
+        ph_y = 400
+        y_nm += 230
+        y_q += 230
 
     # ---- frases do poema
     fp = font(LORA_I, 80, "Medium Italic")
@@ -227,6 +256,8 @@ def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, 
             a_h = ease((tm - T_LOOP) / FADE)
         if a_h > 0:
             pulse = 1.0 + 0.02 * math.sin(tm * 2.2)
+            if ph_rgb is not None:
+                blend(f, ph_rgb, ph_al, ph_y, a_h)
             blend(f, nm_rgb, nm_al, y_nm, a_h)
             blend(f, q_rgb, q_al, y_q, a_h)
         # frases (fade suave)
