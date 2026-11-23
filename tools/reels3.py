@@ -94,7 +94,7 @@ def synth_music(path, dur, mood="hope", seed=3):
 
 
 def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, out_mp4,
-                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6, mood="hope"):
+                tag=None, cta_lines=None, cta_title="Salve e envie", seed=5, preview=None, loop_tail=1.6, mood="hope", music_vol=0.55):
     """segs: [(texto, t0)] das frases do poema (fim = t0 da proxima; ultima termina em cta_from)."""
     th = THEMES[theme_name]
     key = th["key"]
@@ -259,7 +259,7 @@ def build_reel3(theme_name, name, question, segs, cta_from, narr_mp3, narr_dur, 
     synth_music(pad, dur, mood, seed)
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
            "-i", pad, "-i", narr_mp3,
-           "-filter_complex", "[1:a]volume=0.55[m];[2:a]volume=1.25,asplit=2[n][sc];[m][sc]sidechaincompress=threshold=0.02:ratio=9:attack=25:release=500[mc];[mc][n]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]",
+           "-filter_complex", "[1:a]volume=" + str(music_vol) + "[m];[2:a]volume=1.25,asplit=2[n][sc];[m][sc]sidechaincompress=threshold=0.02:ratio=9:attack=25:release=500[mc];[mc][n]amix=inputs=2:duration=longest:normalize=0,alimiter=limit=0.95[a]",
            "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-maxrate", "6M", "-bufsize", "12M",
            "-pix_fmt", "yuv420p", "-r", str(FPS), "-c:a", "aac", "-b:a", "160k", "-t", f"{dur:.2f}", "-movflags", "+faststart", out_mp4]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
